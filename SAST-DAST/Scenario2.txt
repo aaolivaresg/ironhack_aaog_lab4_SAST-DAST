@@ -1,0 +1,33 @@
+DEFINE FUNCTION generateJWT(userCredentials):
+  IF validateCredentials(userCredentials):
+    SET tokenExpiration = currentTime + 3600 // Token expires in one hour
+    RETURN encrypt(userCredentials + tokenExpiration, secretKey)
+  ELSE:
+    RETURN error
+
+El token de acuerdo a las lecciones debe estar codificado en Base64, además un payload con los datos de usuario
+y la expiración, y una signature generada con el secretKey. Cambiamos el userCredentials por userData, ya
+que en el json web token no se envía la contraseña del usuario.
+
+
+DEFINE FUNCTION generateJWT(userData):
+  IF validateCredentials(userCredentials):
+    SET header = Base64Encode({"alg": "ALGORITMO_ELEGIDO", "type": "JWT"})
+    SET payload = Base64Encode({"userData": userData, "expiration": currentTime + 3600})
+    SET signature = HMACSHA256(header + "." + payload, secretKey)
+    RETURN header + "." + payload + "." + signature
+  ELSE:
+    RETURN error
+
+
+Además deberíamos tener una función para validar el token, que verifique la firma y la expiración del token:
+
+DEFINE FUNCTION validateJWT(token):
+   [header, payload, signature] = token
+  IF currentTime > payload.expiration
+    RETURN "token expired"
+  SET expectedSignature = HMACSHA256(header + "." + payload, secretKey)
+  IF expectedSignature == signature:
+    RETURN payload.userData
+  ELSE:
+    RETURN error, "Invalid token signature"

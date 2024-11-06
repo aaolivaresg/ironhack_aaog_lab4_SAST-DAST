@@ -1,0 +1,34 @@
+PLAN secureDataCommunication:
+  IMPLEMENT SSL/TLS for all data in transit
+  USE encrypted storage solutions for data at rest
+  ENSURE all data exchanges comply with HTTPS protocols
+
+
+
+Plan de Comunicación Segura de Datos:
+
+1.- Implementación de SSL/TLS para Datos en Tránsito
+
+Que: Utilizar los protocolos SSL/TLS para encriptar todos los datos que se transmiten entre el cliente y el servidor.
+con esto aseguramos que los datos no sean interceptados o manipulados por terceros.
+
+Cómo: Configurar SSL/TLS en el servidor para todas las conexiones externas, asegurándose de que solo se establezcan conexiones seguras.
+
+2.- Almacenamiento Encriptado para Datos en Reposo
+
+Que: Guardar datos almacenados en bases de datos o sistemas de archivos con alguna encriptación.
+
+Cómo: Generar accesos seguros para cada usuario otorgando roles y asignarles una clave de encriptación única para ver los archivos además
+implementar un sistema de encriptación en la base de datos o en el sistema de archivos, de forma que todos los datos almacenados se
+cifren automáticamente.
+
+3.- Cumplir con los Protocolos HTTPS
+
+Que: Garantizar que todos los intercambios de datos se realicen exclusivamente mediante HTTPS.
+
+Como: Configurar el servidor para que acepte únicamente conexiones HTTPS, bloqueando el acceso a través de HTTP.
+Verificar que todos los enlaces y recursos utilicen URLs HTTPS.
+
+
+Este plan regularmente se implementa en varias aplicaciones web y en mi experiencia ayuda mucho
+a mitigar riesgos de seguridad en la aplicación.

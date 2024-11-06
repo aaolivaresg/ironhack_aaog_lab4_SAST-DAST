@@ -1,0 +1,47 @@
+Scenario 1: Pseudo-Code for Authentication System
+FUNCTION authenticateUser(username, password):
+  QUERY database WITH username AND password
+  IF found RETURN True
+  ELSE RETURN False
+
+
+==============================================
+Análisis de Vulnerabilidades (SAST)
+==============================================
+
+Inyección SQL: Puede haber inyecciones SQL.
+Un atacante puede manipular los parámetros usuario y psw y modificar la consulta y obtener acceso no autorizado.
+
+DAST: Se puede probar con algún software de pruebas de penetración para verificar si hay vulnerabilidades.
+podemos mandar peticiones con valores maliciosos y ver si el sistema responde de manera inesperada.
+
+Fuerza bruta: El código puede permitir que un atacante intente múltiples
+combinaciones de usuario y psw hasta adivinar las credenciales.
+
+DAST: podemos usar algun programa de diccionario de datos ya que no hay forma de bloquear reintentos.
+
+Almacenamiento inseguro de contraseñas: Se compara username y password directamente en la base de datos.
+Esto no debería suceder ya que no debemos guardar password sin cifrar
+además esto es un riesgo de seguridad si un atacante accede a la base de datos.
+
+DAST: Podemos probar si las contraseñas se almacenan de forma incorrecta mandando una petición con un usuario y psw.
+
+==============================================
+Plan de Mitigación
+==============================================
+
+Inyección SQL: Asegurar que los valores de username y password se traten como datos y no como código SQL.
+
+Ejemplo de consulta segura:
+
+SELECT * FROM users WHERE username = ? AND password = ?
+
+Almacenamiento inseguro de contraseñas:
+
+Implementar algún algoritmo seguro almacenar contraseñas en la base. Esto proteje el psw y lo que se compararía
+sería el hash obtenido del algoritmo de cifrado y no la contraseña en si.
+
+
+Fuerza bruta:Hay algunas medidas para evitar que se hagan varias peticiones.
+
+Por ejemplo: podemo bloquear al usuario después de varios intentos fallidos.
